@@ -14,3 +14,9 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::auth();
+Route::group(['middleware'=>'subscriber'], function (){
+    Route::resource('/userPanel', 'UserPanelController');
+});
+

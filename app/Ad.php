@@ -1,0 +1,24 @@
+<?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Ad extends Model
+{
+    protected $fillable = [
+        'title', 'shortDescription', 'body', 'user_id', 'photo_id', 'category_id',
+        ];
+
+    public function user(){
+        return $this->belongsTo('App\User');
+    }
+
+    public function photo(){
+        return $this->belongsTo('App\Photo');
+    }
+
+    public function category(){
+        return $this->belongsTo('App\Category');
+    }
+}

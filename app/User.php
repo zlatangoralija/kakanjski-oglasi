@@ -12,7 +12,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'fullName', 'name', 'email', 'password',
     ];
 
     /**
@@ -23,4 +23,16 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function role(){
+        return $this->belongsTo('App\Role');
+    }
+
+    //provjeravamo da li je user subsrciber kako bi to mogli koristiti za middleware
+    public function isSubscriber(){
+        if($this->role->name == "subscriber"){
+            return true;
+        }
+        return false;
+    }
 }
