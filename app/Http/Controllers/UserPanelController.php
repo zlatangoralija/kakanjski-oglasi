@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
+use App\Photo;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -19,7 +21,8 @@ class UserPanelController extends Controller
     {
         if(Auth::check()){
         $user = Auth::user();
-        return view('frontend.user.index', compact('user'));
+        $ads = Auth::user()->ads->all();
+        return view('frontend.user.index', compact('user', 'ads'));
         }
         return view('auth.login');
 
@@ -32,7 +35,10 @@ class UserPanelController extends Controller
      */
     public function create()
     {
-        //
+        $ads = Auth::user()->ads->all();
+        $user = Auth::user();
+        $categories = Category::lists('name', 'id')->all();
+        return view('frontend.user.create', compact('categories', 'user', 'ads'));
     }
 
     /**
@@ -43,7 +49,18 @@ class UserPanelController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = Auth::user();
+        $input = $request->all();
+
+        if ($file = $request->file('photo_id')){
+            $name = time().$file->getClientOriginalName();
+            $file->move('images', $name);
+            $photo = Photo::create(['path'=>$name]);
+            $input['photo_id'] = $photo->id;
+        }
+
+        $user->ads()->create($input);
+        return redirect('/userPanel');
     }
 
     /**

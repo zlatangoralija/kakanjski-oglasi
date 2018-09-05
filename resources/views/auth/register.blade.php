@@ -10,15 +10,93 @@
                     <form class="form-horizontal" role="form" method="POST" action="{{ url('/register') }}">
                         {{ csrf_field() }}
 
-                        <div class="form-group{{ $errors->has('fullName') ? ' has-error' : '' }}">
-                            <label for="fullName" class="col-md-4 control-label">Ime i prezime</label>
+                        <div class="form-group{{ $errors->has('full_name') ? ' has-error' : '' }}">
+                            <label for="full_name" class="col-md-4 control-label">Ime i prezime</label>
 
                             <div class="col-md-6">
-                                <input id="fullName" type="text" class="form-control" name="fullName" value="{{ old('fullName') }}">
+                                <input id="full_name" type="text" class="form-control" name="full_name" value="{{ old('full_name') }}">
 
-                                @if ($errors->has('fullName'))
+                                @if ($errors->has('full_name'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('fullName') }}</strong>
+                                        <strong>{{ $errors->first('full_name') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-group{{ $errors->has('region') ? ' has-error' : '' }}">
+                            <label for="region" class="col-md-4 control-label">Regija-Kanton</label>
+
+                            <div class="col-md-6">
+                                <input id="region" type="text" class="form-control" name="region" value="{{ old('region') }}">
+
+                                @if ($errors->has('region'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('region') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-group{{ $errors->has('city') ? ' has-error' : '' }}">
+                            <label for="city" class="col-md-4 control-label">Grad</label>
+
+                            <div class="col-md-6">
+                                <input id="city" type="text" class="form-control" name="city" value="{{ old('city') }}">
+
+                                @if ($errors->has('city'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('city') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-group{{ $errors->has('post_number') ? ' has-error' : '' }}">
+                            <label for="post_number" class="col-md-4 control-label">Poštanski broj</label>
+
+                            <div class="col-md-6">
+                                <input id="post_number" type="text" class="form-control" name="post_number" value="{{ old('post_number') }}">
+
+                                @if ($errors->has('post_number'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('post_number') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-group{{ $errors->has('address') ? ' has-error' : '' }}">
+                            <label for="address" class="col-md-4 control-label">Adresa</label>
+
+                            <div class="col-md-6">
+                                <input id="address" type="text" class="form-control" name="address" value="{{ old('address') }}">
+
+                                @if ($errors->has('address'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('address') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-group{{ $errors->has('birthday') ? ' has-error' : '' }}">
+                            <label for="birthday" class="col-md-4 control-label">Datum rođenja</label>
+
+                            <div class="col-md-6">
+                                <input id="birthday" type="text" class="form-control" name="birthday" value="{{ old('birthday') }}">
+
+                                @if ($errors->has('birthday'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('birthday') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-group{{ $errors->has('phone_number') ? ' has-error' : '' }}">
+                            <label for="phone_number" class="col-md-4 control-label">Broj telefona</label>
+
+                            <div class="col-md-6">
+                                <input id="phone_number" type="text" class="form-control" name="phone_number" value="{{ old('phone_number') }}">
+
+                                @if ($errors->has('phone_number'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('phone_number') }}</strong>
                                     </span>
                                 @endif
                             </div>

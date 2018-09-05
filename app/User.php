@@ -12,7 +12,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'fullName', 'name', 'email', 'password',
+        'full_name', 'name', 'email', 'password', 'region', 'city', 'post_number', 'address', 'birthday', 'phone_number',
     ];
 
     /**
@@ -26,6 +26,14 @@ class User extends Authenticatable
 
     public function role(){
         return $this->belongsTo('App\Role');
+    }
+
+    public function ads(){
+        return $this->hasMany('App\Ad');
+    }
+
+    public function photo(){
+        return $this->belongsTo('App\Photo', 'photo_id');
     }
 
     //provjeravamo da li je user subsrciber kako bi to mogli koristiti za middleware

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Ad extends Model
 {
     protected $fillable = [
-        'title', 'shortDescription', 'body', 'user_id', 'photo_id', 'category_id',
+        'title', 'short_description', 'body', 'price', 'condition', 'user_id', 'photo_id', 'category_id',
         ];
 
     public function user(){
@@ -15,7 +15,7 @@ class Ad extends Model
     }
 
     public function photo(){
-        return $this->belongsTo('App\Photo');
+        return $this->belongsTo('App\Photo', 'photo_id');
     }
 
     public function category(){
