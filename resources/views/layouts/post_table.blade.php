@@ -22,7 +22,6 @@
             <td>path</td>
             <td>{{$ad->created_at->diffForHumans()}}</td>
             <td>Opcije</td>
-
         </tr>
     @endforeach
     </tbody>
