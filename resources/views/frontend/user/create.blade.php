@@ -2,7 +2,6 @@
 
 @section('content')
 
-
     <section id="subintro">
         <div class="jumbotron subhead" id="overview">
             <div class="container">
@@ -25,7 +24,7 @@
             <div class="row">
                 <div class="span12">
                         <legend>Dodajte novi oglas</legend>
-                    {!! Form::open(['method'=>'POST', 'action'=>'UserPanelController@store', 'files'=>true])!!}
+                    {!! Form::open(['method'=>'POST', 'action'=>'UserAdsController@store', 'files'=>true])!!}
 
                         <div class="span5">
                             {!! Form::label('title','Naslov oglasa') !!}

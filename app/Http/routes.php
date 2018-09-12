@@ -17,6 +17,8 @@ Route::get('/', function () {
 
 Route::auth();
 Route::group(['middleware'=>'subscriber'], function (){
-    Route::resource('/userPanel', 'UserPanelController');
+    Route::resource('/user', 'UserPanelController');
+    Route::resource('/user/ads', 'UserAdsController');
+    Route::get('/ad/delete/{id}', 'UserAdsController@destroy');
 });
 

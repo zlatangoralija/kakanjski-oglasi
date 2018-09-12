@@ -78,14 +78,14 @@
                             {{-- Ako user nije prijavljen ima opciju prijave --}}
                                 <li>
                                     @if(!Auth::check())
-                                    <a href="{{route('userPanel.index')}}">Prijava</a>
+                                    <a href="{{route('user.index')}}">Prijava</a>
                                 </li>
                             @else
                                 <li class="dropdown">
                                     <a href="#"><i class="icon-user"></i>{{Auth::user()->name}}</a>
                                     <ul class="dropdown-menu">
-                                        <li><a href="/userPanel">Račun</a></li>
-                                        <li><a href="/userPanel/create">Dodaj oglas</a></li>
+                                        <li><a href="/user">Račun</a></li>
+                                        <li><a href="/user/ads/create">Dodaj oglas</a></li>
                                         <li><a href="base-css.html">Admin radnja 3</a></li>
                                         <li><a href="components.html">Admin radnja 4</a></li>
                                         <li><a href="javascript.html">Admin radnja 5</a></li>

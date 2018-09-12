@@ -15,7 +15,7 @@
             <li><label>Kontakt telefon: </label>{{$user->phone_number}}</li>
             <li><label>E-mail: </label>{{$user->email}}</li>
             {{-- Dodavanje dugmeta za editovanje usera --}}
-            <a type="button" href="{{route('userPanel.edit', $user->id)}}" class="btn btn-primary"><i class="icon-chevron-up"></i>Izmjeni</a>
+            <a type="button" href="{{route('user.edit', $user->id)}}" class="btn btn-primary"><i class="icon-chevron-up"></i>Izmjeni</a>
             <p> </p>
         </ul>
     </div>

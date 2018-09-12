@@ -2,17 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Ad;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Category;
 use App\Photo;
-use App\User;
-use Faker\Provider\File;
-use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Input;
 
-class UserPanelController extends Controller
+class UserAdsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -21,13 +19,7 @@ class UserPanelController extends Controller
      */
     public function index()
     {
-        if(Auth::check()){
-        $user = Auth::user();
-        $ads = Auth::user()->ads->all();
-        return view('frontend.user.index', compact('user', 'ads'));
-        }
-        return view('auth.login');
-
+        //
     }
 
     /**
@@ -37,7 +29,10 @@ class UserPanelController extends Controller
      */
     public function create()
     {
-        //
+        $ads = Auth::user()->ads->all();
+        $user = Auth::user();
+        $categories = Category::lists('name', 'id')->all();
+        return view('frontend.user.create', compact('categories', 'user', 'ads'));
     }
 
     /**
@@ -48,7 +43,20 @@ class UserPanelController extends Controller
      */
     public function store(Request $request)
     {
+        //Spremanje oglasa za odredjenog usera
+        $user = Auth::user();
+        $input = $request->all();
 
+        //provjerava se da li postoji fajl u formi, ako postoji daje mu se ime, prebacuje se u direktorij "images" i sprema se u bazu podataka
+        if ($file = $request->file('photo_id')){
+            $name = time().$file->getClientOriginalName();
+            $file->move('images', $name);
+            $photo = Photo::create(['path'=>$name]);
+            $input['photo_id'] = $photo->id;
+        }
+
+        $user->ads()->create($input);
+        return redirect('/user');
     }
 
     /**
@@ -59,7 +67,7 @@ class UserPanelController extends Controller
      */
     public function show($id)
     {
-
+        //
     }
 
     /**
@@ -70,8 +78,8 @@ class UserPanelController extends Controller
      */
     public function edit($id)
     {
-        $user = User::findOrFail($id);
-        return view('frontend.user.edit', compact('user'));
+        $ad = Ad::findOrFail($id);
+        return view('frontend.user.ad_edit', compact('ad'));
     }
 
     /**
@@ -83,20 +91,14 @@ class UserPanelController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user = User::findOrFail($id);
-
-        //Provjeravanje da li ima passworda, ako ga ima zanemaruje se i unose se ostali podaci u bazu podataka
-        if (trim($request->password) == ''){
-            $input = $request->except('password');
-        } else {
-            $input = $request->all();
-        }
+        $ad = Ad::findOrFail($id);
+        $input = $request->all();
 
         if ($file = $request->file('photo_id')){
             //Brisanje vec postojece slike
-            $usersImage = public_path("/images/{$user->photo->path}"); //prethodna userova slika
-            if(file_exists($usersImage)){ //ako postoji userova slika, ta se brise a poslije te se dodaje nova
-                unlink($usersImage);
+            $adsImage = public_path("/images/{$ad->photo->path}"); //prethodna userova slika
+            if(file_exists($adsImage)){ //ako postoji userova slika, ta se brise a poslije te se dodaje nova
+                unlink($adsImage);
             }
             $name = time().$file->getClientOriginalName();
             $file->move('images', $name);
@@ -104,9 +106,9 @@ class UserPanelController extends Controller
 
             $input['photo_id']= $photo->id;
         }
-        $user->update($input);
-        return redirect('/user');
 
+        $ad->update($input);
+        return redirect('/user');
     }
 
     /**
@@ -117,6 +119,7 @@ class UserPanelController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Ad::destroy($id);
+        return redirect()->back();
     }
 }
