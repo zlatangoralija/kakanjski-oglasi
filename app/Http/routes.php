@@ -11,9 +11,11 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//Route::get('/', function () {
+//    return view('welcome');
+//});
+
+Route::get('/', 'UserAdsController@index');
 
 Route::auth();
 Route::group(['middleware'=>'subscriber'], function (){

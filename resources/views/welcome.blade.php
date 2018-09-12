@@ -136,7 +136,7 @@
         <div class="row">
             <div class="span12">
                 <div class="page-header">
-                    <h1>Dobrodošli na kakansjkioglasi.ba <small>Prikazuje se "broj" oglasa</small></h1>
+                    <h1>Dobrodošli na kakansjkioglasi.ba <small>Prikazuje se {{$numberOfAds}} oglasa</small></h1>
                 </div>
                 <ul class="filter">
                     <li class="all active"><a href="#" class="btn btn-color">All categories</a></li>
@@ -148,31 +148,34 @@
         </div>
         <div class="row">
             <div class="home-posts">
-                {{-- Ovdje ide petlja for-each za sve oglase --}}
-                <div class="span3">
-                    <div class="post-image">
-                        <a href="post_right_sidebar.html">
-                            <img src="{{asset('frontendAssets/assets/img/dummies/blog1.jpg')}}" alt="">
-                        </a>
-                    </div>
-                    <div class="entry-meta">
-                        <a href="#"><i class="icon-square icon-48 icon-external-link left"></i></a>
-                        <span class="date">Sep 17 <br>
-					2013</span>
-                    </div>
-                    <!-- end .entry-meta -->
-                    <div class="entry-body">
-                        <a href="post_right_sidebar.html">
-                            <h5 class="title">This is a standard post</h5>
-                        </a>
-                        <p>
-                            Lorem ipsum dolor sit amet nec, consectetuer adipiscing elit. Aenean commodo ligula eget dolor aenean massa.
-                        </p>
-                    </div>
-                    <!-- end .entry-body -->
-                    <div class="clear">
-                    </div>
-                </div>
+                @if($ads)
+                    @foreach($ads as $ad)
+                        <div class="span3">
+                            <div class="post-image">
+                                <a href="">
+                                    <img src="/thumbnails/{{$ad->photo->path}}" alt="asd">
+                                </a>
+                                <br>
+                            </div>
+                            <div class="entry-meta">
+                                <a href="#"><i class="icon-square icon-48 icon-external-link left"></i></a>
+                                <span class="date">{{ \Carbon\Carbon::parse($ad->created_at)->format('d/m')}} <br>
+                            {{ \Carbon\Carbon::parse($ad->created_at)->format('Y')}}</span>
+                            </div>
+                            <!-- end .entry-meta -->
+                            <div class="entry-body">
+                                <a href="">
+                                    <h5 class="title">{{$ad->title}}</h5>
+                                </a>
+                                <p>{{$ad->short_description}}</p>
+                                <p>Od: {{$ad->user->name}}</p>
+                            </div>
+                            <!-- end .entry-body -->
+                            <div class="clear">
+                            </div>
+                        </div>
+                @endforeach
+            @endif
             </div>
         </div>
     </div>

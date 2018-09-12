@@ -9,6 +9,7 @@ use App\Category;
 use App\Photo;
 
 use App\Http\Requests;
+use Intervention\Image\Facades\Image;
 
 class UserAdsController extends Controller
 {
@@ -19,7 +20,9 @@ class UserAdsController extends Controller
      */
     public function index()
     {
-        //
+        $ads = Ad::all();
+        $numberOfAds = count($ads);
+        return view('welcome', compact('ads', 'numberOfAds'));
     }
 
     /**
@@ -53,6 +56,14 @@ class UserAdsController extends Controller
             $file->move('images', $name);
             $photo = Photo::create(['path'=>$name]);
             $input['photo_id'] = $photo->id;
+
+            // // create instance of Intervention Image
+            $img = Image::make('images/'.$name);
+            $img->save(public_path().'/images/'.$name);
+            $thumbnailImage = Image::make($img);
+            $thumbnailImage->fit(800, 400); //od orginalne slike praviimo thumbnail koji ce imati velicinu 800x400
+            $thumbnailImage->save(public_path().'/thumbnails/'.$name);
+
         }
 
         $user->ads()->create($input);
